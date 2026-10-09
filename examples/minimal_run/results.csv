@@ -1,0 +1,2 @@
+timestamp,tile_id,region_name,center_lat,center_lon,tile_km,manifest_row,manifest_col,parent_score,parent_navigate,zoom_triggered,final_label,aggregation_reason,image_path
+2026-01-01T00:00:00Z,synthetic_r0_c0,synthetic,0.0,0.0,1.9,0,0,2,zoom_in,True,yes,zoom_in_found_decisive_positive_child,

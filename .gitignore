@@ -1,0 +1,27 @@
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local data and generated outputs
+IMINT-Images/
+IMINT-Outputs/
+outputs/
+reports/
+*.log
+
+# Research data and model artifacts are not distributed in the review repository.
+*.tif
+*.tiff
+*.kmz
+*.kml
+*.pt
+*.pth
+*.ckpt

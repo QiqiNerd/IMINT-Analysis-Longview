@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-01-01T00:00:00Z",
+  "base_tile": {
+    "tile_id": "synthetic_r0_c0",
+    "region_name": "synthetic",
+    "center_lat": 0.0,
+    "center_lon": 0.0,
+    "tile_km": 1.9,
+    "image_path": "",
+    "raw_path": null,
+    "manifest_row": 0,
+    "manifest_col": 0,
+    "source_kind": "synthetic_fixture",
+    "variant_kind": "base",
+    "variant_label": "base"
+  },
+  "parent_eyes": {
+    "analysis": "Synthetic fixture for testing the offline result-processing path."
+  },
+  "parent_brains": {
+    "score_-10_10": 2,
+    "navigate": "zoom_in"
+  },
+  "parent_score": 2,
+  "parent_initial_label": "unresolved",
+  "zoom_triggered": true,
+  "zoom_records": [
+    {
+      "tile": {
+        "tile_id": "synthetic_r0_c0__zin__NW",
+        "region_name": "synthetic",
+        "center_lat": 0.0,
+        "center_lon": 0.0,
+        "tile_km": 0.95,
+        "image_path": "",
+        "raw_path": null,
+        "manifest_row": null,
+        "manifest_col": null,
+        "source_kind": "synthetic_fixture",
+        "derived_from_tile_id": "synthetic_r0_c0",
+        "variant_kind": "zoom_in",
+        "variant_label": "NW"
+      },
+      "eyes": {
+        "analysis": "Synthetic positive child used only to verify report generation."
+      },
+      "brains": {
+        "score_-10_10": 6,
+        "navigate": "neither"
+      }
+    }
+  ],
+  "final_label": "yes",
+  "aggregation_reason": "zoom_in_found_decisive_positive_child"
+}
