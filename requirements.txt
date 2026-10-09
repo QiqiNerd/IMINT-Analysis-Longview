@@ -1,4 +1,10 @@
-openai
-Pillow
 python-dotenv
+pandas
+Pillow
 requests
+openai
+scikit-learn
+numpy
+matplotlib
+plotly
+streamlit

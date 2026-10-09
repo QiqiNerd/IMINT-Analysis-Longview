@@ -1,0 +1,23 @@
+Below are {n_errors} explanations for why a satellite image classifier made wrong predictions. Each entry includes the image name, the predicted vs true label, and an explanation of the error.
+
+{diff_entries}
+
+Group these failures into distinct categories of error patterns. For each category provide:
+- "name": short descriptive name
+- "description": what the model consistently gets wrong in this category
+- "count": how many errors fall into this category
+- "image_names": list of image_name values belonging to this category
+
+An error can belong to multiple categories if applicable.
+
+Respond with JSON in this exact format:
+{{
+  "categories": [
+    {{
+      "name": "...",
+      "description": "...",
+      "count": N,
+      "image_names": ["...", "..."]
+    }}
+  ]
+}}

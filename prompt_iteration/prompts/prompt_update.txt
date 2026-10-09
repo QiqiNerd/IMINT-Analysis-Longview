@@ -1,0 +1,20 @@
+You are improving a satellite image classification prompt based on evaluation results.
+
+Here is the current prompt:
+---
+{current_prompt}
+---
+
+The prompt was evaluated on a validation set. Here are the failure categories that were identified:
+
+{clusters}
+
+The overall accuracy was {accuracy:.1%} ({n_correct}/{n_total} correct).
+
+Rewrite the classification prompt to address these failure patterns. Guidelines:
+- Keep the same task and output format requirements
+- Add specific guidance that helps avoid the identified error patterns
+- Be concrete: reference visual features, common confusions, and distinguishing characteristics
+- Do not make the prompt excessively long; aim for clear, actionable guidance
+
+Return ONLY the updated prompt text, nothing else.

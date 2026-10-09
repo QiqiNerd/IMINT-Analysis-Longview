@@ -1,0 +1,10 @@
+You are an expert satellite imagery analyst reviewing a classification error.
+
+The image was classified as "{predicted_label}" but the correct label is "{true_label}".
+
+The model's reasoning was:
+{model_explanation}
+
+Look at the image carefully. Explain why the classification was wrong. What visual features were misinterpreted or missed? Be specific about what the model should have noticed.
+
+Respond with a short, focused explanation (2-4 sentences).

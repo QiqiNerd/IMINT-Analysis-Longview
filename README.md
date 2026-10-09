@@ -1,32 +1,30 @@
-# VLM Broad Area Search for Layered Security Perimeters
+# IMINT Analysis
 
-This repository is a compact technical review of a vision-language-model pipeline for triaging high-resolution optical satellite imagery. The system searches broad areas for facilities with layered security perimeters and ranks candidate image tiles for human review.
+This repository presents research code from a collaboration on vision-language-model analysis of high-resolution optical satellite imagery. It includes both the paper-facing two-agent broad-area-search pipeline and the supporting evaluation, fine-tuning, prompt-iteration, data-preparation, and visualization workflows developed during the project.
 
-The implementation supports the experiments described in *Catching Proliferation at the Fence: Vision Language Models for Detecting Nuclear Infrastructure*, including the Saratov, Natanz, and Fordow cases and the comparison between Google Maps zoom levels 16 and 17.
+The two-agent implementation supports the experiments described in *Catching Proliferation at the Fence: Vision Language Models for Detecting Nuclear Infrastructure*, including the Saratov, Natanz, and Fordow cases and the comparison between Google Maps zoom levels 16 and 17.
 
-This public review copy contains only the paper-facing pipeline. Earlier classification, fine-tuning, prompt-iteration, data-preparation, Streamlit, and one-off conversion scripts from the larger collaboration are intentionally omitted.
+This public review copy is intentionally code-focused. It excludes imagery, coordinate datasets, model outputs, credentials, local environments, and one-off conversion or repair scripts. See [CONTRIBUTIONS.md](CONTRIBUTIONS.md) for the functional division of work and [DATA_AND_SHARING.md](DATA_AND_SHARING.md) for the public-sharing boundary.
 
-## Pipeline
+## Paper-facing two-agent workflow
 
-1. `scan_tiles_overscan_crop.py` partitions a circular search area into standardized image tiles, downloads and caches source imagery, and records spatial metadata in a manifest.
-2. `two_agent_cached_tiles.py` runs an image-analysis agent followed by a scoring and navigation agent.
+1. `scripts/scan_tiles_overscan_crop.py` partitions a circular search area into standardized image tiles, downloads and caches source imagery, and records spatial metadata in a manifest.
+2. `scripts/two_agent_cached_tiles.py` runs an image-analysis agent followed by a scoring and navigation agent.
 3. Ambiguous tiles can trigger one follow-up round: quadrant-level analysis for local detail or a wider contextual view.
-4. `flatten_two_agents_results_long.py` converts nested per-tile results into an analysis-ready table.
-5. `make_two_agent_report.py` generates a static offline report for ranked human review.
+4. `scripts/make_two_agent_report.py` reads the run outputs directly and generates a static offline report for ranked human review.
 
-## Repository layout
+## Supporting research workflows
 
-```text
-scripts/
-  scan_tiles_overscan_crop.py
-  two_agent_cached_tiles.py
-  flatten_two_agents_results_long.py
-  make_two_agent_report.py
-examples/
-  minimal_run/                 Synthetic output fixture for offline testing
-CONTRIBUTIONS.md
-DATA_AND_SHARING.md
-```
+- `evals/` contains prompts and evaluation utilities for anti-aircraft artillery, double-fence, and warhead-storage detection.
+- `fine-tuning/` contains training-record preparation and fine-tuning metric visualization.
+- `prompt_iteration/` contains the iterative prompt-analysis, clustering, evaluation, and update workflow.
+- `streamlit_app/` contains an exploratory imagery visualization interface.
+- `scripts/classify_and_fetch_radius_images.py` performs model-assisted regional scanning.
+- `scripts/cluster_and_analyze_detections.py` and `scripts/plot_cluster_detections.py` group and visualize detections.
+- `scripts/google_maps_collection.py` supports imagery collection.
+- `scripts/calculate_metrics.py`, `scripts/generate_russian_negatives.py`, and `scripts/random_coordinates.py` support evaluation-data preparation and analysis.
+
+One-off utilities such as CSV/JSON converters, result flatteners, batch rerun wrappers, repair scripts, and duplicate report implementations are not included.
 
 ## Setup
 
@@ -39,18 +37,11 @@ python -m pip install -r requirements.txt
 cp .env.example .env
 ```
 
-Add the credentials required for the workflow:
+Provide only the credentials required for the workflow being run. Never commit `.env`, downloaded imagery, or generated outputs.
 
-```text
-OPENAI_API_KEY=...
-GOOGLE_MAPS_STATIC_API_KEY=...
-```
+## Generate a tile cache
 
-Never commit `.env`, downloaded imagery, or generated outputs.
-
-## Generate an image-tile cache
-
-This example uses the paper's baseline tile geometry without prescribing a study location. Imagery retrieval must comply with the provider's terms.
+The following example uses the paper's baseline tile geometry without prescribing a study location. Imagery retrieval must comply with the provider's terms.
 
 ```bash
 python scripts/scan_tiles_overscan_crop.py \
@@ -84,12 +75,9 @@ python scripts/two_agent_cached_tiles.py \
 
 The pipeline writes resumable run metadata, per-tile JSON records, and CSV/JSONL summaries. The model name is an example; use a vision-capable model available to the reviewing account.
 
-## Flatten results and generate a report
+## Generate the review report
 
 ```bash
-python scripts/flatten_two_agents_results_long.py \
-  --run_dir ../IMINT-Outputs/example_run
-
 python scripts/make_two_agent_report.py \
   --run_dir ../IMINT-Outputs/example_run \
   --scan_dir ../IMINT-Images/example_z16 \
@@ -107,13 +95,9 @@ Syntax-check the repository without calling an external API:
 PYTHONPYCACHEPREFIX=/tmp/imint-pycache python -m compileall -q .
 ```
 
-Exercise the result-processing and report-generation path using the included synthetic fixture:
+Exercise static report generation using the included synthetic fixture:
 
 ```bash
-python scripts/flatten_two_agents_results_long.py \
-  --run_dir examples/minimal_run \
-  --output_csv /tmp/imint_minimal_results.csv
-
 python scripts/make_two_agent_report.py \
   --run_dir examples/minimal_run \
   --output_dir /tmp/imint_minimal_report \
